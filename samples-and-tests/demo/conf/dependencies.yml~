@@ -1,0 +1,14 @@
+# Application dependencies
+
+require:
+    - play
+#    - play -> secure
+
+    - improvedsession -> improvedsession
+
+repositories:
+    - test improvedsession module:
+        type:       local
+        artifact:   ${application.path}/../../../[module]
+        contains:
+            - improvedsession

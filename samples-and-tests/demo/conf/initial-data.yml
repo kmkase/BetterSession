@@ -1,0 +1,13 @@
+# To load initial-data to fill users to test
+
+User(us1):
+    username:     foo
+    password:     secret
+
+User(us2):
+    username:     bar
+    password:     secret
+
+User(us3):
+    username:     kms
+    password:     secret

@@ -1,0 +1,22 @@
+# You can specialize this file for each language.
+# For example, for French create a messages.fr file
+#
+
+secure.title=
+secure.username=Username:
+secure.password=Password:
+secure.remember=Remember me
+secure.signin=Sign in
+secure.error=Oops, unknown username or password.
+secure.logout=You have been logged out.
+
+logged_in=This User is already Logged In
+
+Session.activate.link=Better session is active
+Session.activate.message=Try to login in other browser with the user [%s] and it's password [%s].
+Session.activate.message2=You cannot be logged with this user.
+Session.activate.message3=Change in your application.conf the property "bettersession.enable" to "false" and you will have multi-sessions.
+Session.deactivate.link=Better session is not actived
+Session.deactivate.message=Try to login in other browser with the user [%s] and it's password [%s].
+Session.deactivate.message2=You can be logged with this user.
+Session.deactivate.message3=Change in your application.conf the property "bettersession.enable" to "true" and you will have a unique-session.

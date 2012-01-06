@@ -1,0 +1,136 @@
+h1. BetterSession module for Play!
+
+h2. What this module do?
+
+This module was developed to get better the actual session functionality of Play!, adding a management of the session in the *Server-side*; with this the BetterSession try to control the session to be unique per each session that was created.
+
+The management of sessions is *supported* by the *Cache* implementation of Play!, that control the sessions in the Server-side and the Cache is *Aided* for a *Table* into a H2 Database embedded; *detached* from the Database used by the *Main Application*.
+
+Only is needed for each session send a *unique value* that allow identify the user that is _logged in_ like *username* or *email*.
+
+h2. Getting Started
+
+Add this module to your _dependecies.yml_ file, like other module of Play!.
+
+bq. @play -> bettersession [version]@
+
+The BetterSession works with a *simple session management* like actual session management of Play! with the session cookie.
+And with the *better session management* with the support of the Cache, and the next property allow you _enable or disable_:
+
+bq. @bettersession.enable=true@
+
+Another properties used by BetterSession are:
+
+bq. @application.session.cookie=MY_APP@
+
+That assign the value @MY_APP@ as a prefix of the name of the key for Cookie and Cache.
+
+bq. @application.session.maxAge=15mn@
+
+With this property you specified the Time to Live for the session; this will be updated every time that client makes a request to the Server and is *required* if you have the property @bettersession.enable@ as @true@; because if isn't present the session will be exists forever.
+
+h2. How works?
+
+BetterSession is design it to work with any Controller that works with authentication functions _(like Secure)_; to be the least invasive possibly; only is require add some methods to replace the actual functions that work to store or remove the session.
+
+The methods used are:
+
+bq. @createSession(String value, Boolean remember)@
+
+Create the session with the param _*value*_ and if _*remember*_ is true, store the session in the remember Cookie too:
+
+bc. public static void authenticate(@Required String username, String password, boolean remember) throws Throwable {
+        ...
+        // Here is created the session and if remember is true the Cookie remember too
+        BetterSessionEvents.createSession(username, remember);
+        // Redirect to the original URL (or /)
+        redirectToOriginalURL();
+    }
+
+bq. @dropSession()@
+
+Drop the session and if the remember Cookie exist too:
+
+bc. public static void logout() throws Throwable {
+        Security.invoke("onDisconnect");
+        // Remove the session
+        BetterSessionEvents.dropSession();
+        ..
+    }
+
+bq. @existSession(String value)@
+
+Verify if the session with this _*value*_ is already active:
+
+bc. public static void authenticate(@Required String username, String password, boolean remember) throws Throwable {
+        ...
+        // -----
+        // Check if the session with the value username is already stored
+        if (Validation.hasErrors() || BetterSessionEvents.existSession(username)) {
+            flash.keep("url");
+            flash.error("logged_in");
+            login();
+        }
+        ...
+    }
+
+bq. @isRememberCookieCreated()@
+
+Make two things this method; check if a _*remember cookie*_ was created, if is true create the session again with the info stored into the remember cookie, and return @true@ as value:
+
+bc. public static void login() throws Throwable {
+        // This method verify if was created a remember Cookie and if it exists create the session again
+        if (BetterSessionEvents.isRememberCookieCreated()) {
+            redirectToOriginalURL();
+        }
+        flash.keep("url");
+        render();
+    }
+
+bq. @isConnected()@
+
+Check if a session exists for the coming request; return @true@ if a session exists and is valid:
+
+bc. static void checkAccess() throws Throwable {
+        // Authenticate
+        if (!BetterSessionEvents.isConnected()) {
+            flash.put("url", "GET".equals(request.method) ? request.url : "/"); // seems a good default
+            login();
+        }
+        ...
+    }
+
+bq. @connected()@
+
+Return the unique value that was stored into the session:
+
+bc. #{if play.modules.bettersession.BetterSession.isConnected()}
+    <p>connected as: <b>${play.modules.bettersession.BetterSession.connected()}</b> <a href="@{SecureController.logout()}">Logout</a></p>
+#{/if}
+
+bq. @connectedAt()@
+
+Return the Date when was stored the session in @long@ format.
+
+bc. #{if play.modules.bettersession.BetterSession.isConnected()}
+    <p>${ new Date(play.modules.bettersession.BetterSession.connectedAt()).format("HH:mm:ss dd-MMMM-yyyy") }</p>
+#{/if}
+
+So, only you need replace each one of the process of the session; create it, drop it, check it, etc., and you will have the improves that offer BetterSession.
+
+In the folder of sample-and-tests you can prove the application demo of the BetterSession.
+
+h2. Clearing the sessions
+
+In a development environment is annoying wait; sometimes, to the session dies; so to make easy this process, was added a route to invokes a action to clear the sessions in Cookie and Cache.
+
+bq. http://localhost:9000/@clear-session
+
+h2. TODO
+
+* Add the possibility to make its own implementation of BetterSessionEventsHandler.java and NotifySessionAidHandler.java
+* Control the sessions that you *CAN* use per unique value (username, email, etc.).
+
+h2. Credits
+
+Author. Omar García G.

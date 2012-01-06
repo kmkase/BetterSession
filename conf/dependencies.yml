@@ -1,0 +1,4 @@
+self: play -> bettersession 0.1
+
+require:
+    - play

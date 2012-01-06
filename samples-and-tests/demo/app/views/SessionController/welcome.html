@@ -1,0 +1,17 @@
+#{extends 'layouts/layout.html' /}
+#{set title: 'Show Message' /}
+
+<div>
+    <h3>You are now logged with: [${user?.username}] user</h3>
+
+    *{ Make a two views one to send if the bettersession is enable and other that show a view if doesn't }*
+    %{ enable = Boolean.parseBoolean(play.Play.configuration.getProperty('bettersession.enable')) }%
+    #{if enable}
+        <p><a href="@{SessionController.betterSessionActivate(user)}">&{'Session.activate.link'}</a></p>
+    #{/if}
+    #{else}
+        <p><a href="@{SessionController.betterSessionDeactivate(user)}">&{'Session.deactivate.link'}</a></p>
+    #{/else}
+
+</div>
+

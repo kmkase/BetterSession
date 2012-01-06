@@ -1,0 +1,11 @@
+h1. BetterSession module for Play!
+
+h2. What this module do?
+
+This module was developed to get better the actual session functionality of Play!, adding a management of the session in the *Server-side*, with this the BetterSession try to control the session to be unique per each session that was created.
+
+The management of sessions is *supported* by the *Cache* implementation of Play!, that control the sessions in the Server-side and the Cache is *Aided* for a *Table* into a H2 Database embedded; *detached* from the Database used by the *Main Application*.
+
+Only is needed for each session send a *unique value* that allow identify the user that is _logged in_ like *username* or *email*.
+
+See "full documentation":https://github.com/kmkase/bettersession/blob/master/documentation/manual/home.textile

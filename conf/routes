@@ -1,0 +1,13 @@
+# This file defines all module routes (Higher priority routes first)
+#
+# import these routes in the main app as :
+# *     /                       module:bettersession
+#
+# ~~~~
+
+#GET     /?                      Module.index
+
+# Url to clear Cache and Table
+if (Play.mode.isDev()) {
+    GET     /@clear-session                      bettersession.BetterSessionController.clearSession
+}

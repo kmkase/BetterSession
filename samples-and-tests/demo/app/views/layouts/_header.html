@@ -1,0 +1,8 @@
+
+#{if play.modules.bettersession.BetterSession.isConnected()}
+    <p>connected as: <b>${play.modules.bettersession.BetterSession.connected()}</b> <a href="@{SecureController.logout()}">Logout</a></p>
+#{/if}
+
+#{if play.modules.bettersession.BetterSession.isConnected()}
+    <p>${ new Date(play.modules.bettersession.BetterSession.connectedAt()).format("HH:mm:ss dd-MMMM-yyyy") }</p>
+#{/if}
