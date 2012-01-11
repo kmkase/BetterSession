@@ -21,9 +21,9 @@ public class BetterSessionUtility {
 
     public static final String PLAY_SESSION_COOKIE_PREFIX = "application.session.cookie";
 
-    public static final String REMEMBER = "remember";
-
     public static final String COOKIE_SESSION_KEY = "better_session";
+
+    public static String REMEMBER = "remember";
 
     public static String CACHE_SESSION_KEY;
 

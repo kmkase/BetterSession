@@ -31,6 +31,7 @@ public class BetterSessionPlugin extends PlayPlugin {
         String sessionCookiePrefix = Play.configuration.getProperty(BetterSessionUtility.PLAY_SESSION_COOKIE_PREFIX);
         Play.configuration.setProperty(BetterSessionUtility.IMPROVED_SESSION_CONFIG_KEY_PREFIX, sessionCookiePrefix != null ? sessionCookiePrefix : "PLAY" );
 
+        BetterSessionUtility.REMEMBER = String.format("%s_%s", BetterSessionUtility.getPrefix(), "remember");
         BetterSessionUtility.CACHE_SESSION_KEY = String.format("%s_%s", BetterSessionUtility.getPrefix(), BetterSessionUtility.COOKIE_SESSION_KEY);
         BetterSessionUtility.TIME_TO_LIVE = BetterSessionUtility.getTimeToLive();
 

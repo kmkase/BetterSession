@@ -142,7 +142,7 @@ public class CookieSessionUtility {
     }
 
     private static String signKey(String key) {
-        return String.format("sign_%s", key);
+        return String.format("%s_sign", key);
     }
 
     private static String signValue(String value) {
