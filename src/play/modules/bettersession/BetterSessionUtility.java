@@ -17,6 +17,8 @@ public class BetterSessionUtility {
 
     public static final String IMPROVED_SESSION_CONFIG_TIME_TO_LIVE = String.format( "%s.timeToLive", BetterSessionUtility.IMPROVED_SESSION_CONFIG_PREFIX);
 
+    public static final String PLAY_APPLICATION_NAME = "application.name";
+
     public static final String PLAY_SESSION_MAX_AGE = "application.session.maxAge";
 
     public static final String PLAY_SESSION_COOKIE_PREFIX = "application.session.cookie";

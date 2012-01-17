@@ -5,7 +5,7 @@
  */
 package play.modules.bettersession.handlers;
 
-public interface BetterSessionEventHandler {
+public interface BetterSessionHandler {
 
     public void create(String value, Boolean remember);
 
@@ -15,7 +15,9 @@ public interface BetterSessionEventHandler {
 
     public void renew();
 
-    public boolean isRememberSessionCookieCreated();
+    public boolean isRememberCookieCreated();
+
+    public void renewSessionFromRememberCookie();
 
     public boolean isConnected();
 

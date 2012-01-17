@@ -9,7 +9,7 @@ import play.modules.bettersession.model.SessionAid;
 
 import java.util.List;
 
-public interface NotifySessionAidHandler {
+public interface SessionNotifiable {
 
     public boolean notifyElementStored(String key, String value);
 

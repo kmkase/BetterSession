@@ -7,9 +7,8 @@ package controllers.bettersession;
 
 import play.Logger;
 import play.cache.Cache;
-import play.modules.bettersession.BetterSessionUtility;
 import play.modules.bettersession.CacheSessionEvents;
-import play.modules.bettersession.SessionAidEvents;
+import play.modules.bettersession.SessionNotifies;
 import play.modules.bettersession.model.SessionAid;
 import play.mvc.Controller;
 
@@ -17,19 +16,19 @@ import java.util.List;
 
 public class BetterSessionController extends Controller {
 
-    public static void clearSession() {
+    public static void cleanSession() {
 //        Cache.clear();
         session.clear();
-        clearCacheSession();
-        SessionAidEvents.notifyClearElements();
+        cleanCacheSession();
+        SessionNotifies.notifyClearElements();
         Logger.debug("===== Session is clear now =====");
         redirect("/");
     }
 
-    private static void clearCacheSession() {
+    private static void cleanCacheSession() {
         // -----
         // Check if the session is still alive and in doesn't remove that session from Table
-        List<SessionAid> sessionAidList = SessionAidEvents.getAllElements();
+        List<SessionAid> sessionAidList = SessionNotifies.getAllElements();
         if (!sessionAidList.isEmpty()) {
             for (SessionAid sessionAid : sessionAidList) {
                 String key = sessionAid.getKey_name();

@@ -64,6 +64,7 @@ public class SecureController extends Controller {
 
         // This method verify if was created a remember Cookie and if it exists create the session again
         if (BetterSession.isRememberCookieCreated()) {
+            BetterSession.renewSessionFromRememberCookie();
             redirectToOriginalURL();
         }
         flash.keep("url");
@@ -96,7 +97,7 @@ public class SecureController extends Controller {
             login();
         }
 
-//        // Mark user as connected
+//        // Mark user as getSessionValue
 //        session.put("username", username);
 //        // Remember if needed
 //        if(remember) {
@@ -173,16 +174,24 @@ public class SecureController extends Controller {
         }
 
         /**
-         * This method returns the current connected username
+         * This method returns the current getSessionValue username
          * @return
          */
         static String connected() {
             return session.get("username");
         }
 
+/**
+         * This method returns the current date of creation
+         * @return
+         */
+        static long connectedAt() {
+            return 0l;
+        }
+
         /**
-         * Indicate if a user is currently connected
-         * @return  true if the user is connected
+         * Indicate if a user is currently getSessionValue
+         * @return  true if the user is getSessionValue
          */
         static boolean isConnected() {
             return session.contains("username");

@@ -6,9 +6,9 @@
 package play.modules.bettersession;
 
 import play.Logger;
-import play.modules.bettersession.handlers.BetterSessionEventHandler;
+import play.modules.bettersession.handlers.BetterSessionHandler;
 
-public class BetterSessionEventImpl implements BetterSessionEventHandler {
+public class BetterSessionHandlerImpl implements BetterSessionHandler {
 
     /**
      * Create the session into the cookie and the cache session
@@ -77,27 +77,44 @@ public class BetterSessionEventImpl implements BetterSessionEventHandler {
 
     /**
      * Check if the session is stored into a remember cookie
-     * If its true create again the session into the cookie session and the into cache session
      *
      * @return true - If the session its stored into remember cookie
      */
-    public boolean isRememberSessionCookieCreated() {
+    public boolean isRememberCookieCreated() {
         // -----
         // Get from remember cookie
         String value = CookieSessionEvents.getRememberCookieValue();
-        if(value != null) {
+        if (value != null) {
             if(BetterSessionUtility.IS_ENABLE) {
-                // Only will create the session if another same one doesn't exist
-                if(!CacheSessionEvents.isSessionIntoCache(makeKeyOfSessionCache(value))) {
-                    create(value, false);
-                    return true;
-                }
-            } else {
-                create(value, false);
-                return true;
+                return !CacheSessionEvents.isSessionIntoCache(makeKeyOfSessionCache(value));
             }
+            return true;
         }
         return false;
+    }
+
+    /**
+     * If a remember cookie renew the session into Cookie and Cache
+     */
+    public void renewSessionFromRememberCookie() {
+        // -----
+        // Get from remember cookie
+        String value;
+        if(isRememberCookieCreated()) {
+            value = CookieSessionEvents.getRememberCookieValue();
+//            if(BetterSessionUtility.IS_ENABLE) {
+//                // Only will create the session if another same one doesn't exist
+//                if(!CacheSessionEvents.isSessionIntoCache(makeKeyOfSessionCache(value))) {
+//                    create(value, false);
+//                } else {
+//                    // otherwise remove the session
+//
+//                }
+//            } else {
+//                create(value, false);
+//            }
+            create(value, false);
+        }
     }
 
     /**

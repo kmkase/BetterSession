@@ -16,7 +16,7 @@ public class SessionController extends Controller {
     public static void welcome() {
         User user = null;
         if (BetterSession.isConnected()) {
-            user = User.findByUsername(BetterSession.connected());
+            user = User.findByUsername(BetterSession.getSessionValue());
         }
         render(user);
     }

@@ -27,8 +27,8 @@ public abstract class CacheSessionEvents {
         // -----
         Cache.safeAdd(key, value, ttl);
 //        Logger.debug("%n~~~~~ Stored into CACHE key: [%s], value: [%s], TTL: [%s] ~~~~~", key, value, ttl);
-        if (!SessionAidEvents.existElement(key)) {
-            SessionAidEvents.notifyElementStored(key, value);
+        if (!SessionNotifies.existElement(key)) {
+            SessionNotifies.notifyElementStored(key, value);
         }
     }
 
@@ -41,7 +41,7 @@ public abstract class CacheSessionEvents {
         // -----
         Cache.safeDelete(key);
 //        Logger.debug("%n~~~~~ Deleted from CACHE key: [%s] ~~~~~", key);
-        SessionAidEvents.notifyElementRemoved(key);
+        SessionNotifies.notifyElementRemoved(key);
     }
 
     /**
@@ -55,7 +55,7 @@ public abstract class CacheSessionEvents {
         // -----
         Cache.safeReplace(key, value, ttl);
 //        Logger.debug("%n~~~~~ Renewed into CACHE key: [%s], value: [%s], TTL: [%s] ~~~~~", key, value, ttl);
-//        SessionAidEvents.notifyElementUpdated(key, value);    // This line only works to Test purpose
+//        SessionNotifies.notifyElementUpdated(key, value);    // This line only works to Test purpose
     }
 
     /**
@@ -69,8 +69,8 @@ public abstract class CacheSessionEvents {
         // Check that the value into cache and the Key sent are equals
         if (Cache.get(key) != null) {
             // This condition make slow the request
-//            if (!SessionAidEvents.existElement(key)) {
-//                SessionAidEvents.notifyElementStored(key, (String) Cache.get(key));
+//            if (!SessionNotifies.existElement(key)) {
+//                SessionNotifies.notifyElementStored(key, (String) Cache.get(key));
 //            }
 //            Logger.debug("%n~~~~~ Session CACHE is OK ~~~~~");
             return true;
@@ -86,7 +86,7 @@ public abstract class CacheSessionEvents {
         // -----
         // If into the MODEL layer have sessions are restored into the CACHE
         if (BetterSessionUtility.IS_ENABLE) {
-            List<SessionAid> sessionAidList = SessionAidEvents.getAllElements();
+            List<SessionAid> sessionAidList = SessionNotifies.getAllElements();
             if (!sessionAidList.isEmpty()) {
                 for (SessionAid sessionAid : sessionAidList) {
 //                    Logger.debug("%n~~~~~ Session MODEL contains key: [%s], value: [%s] ~~~~~", sessionAid.getKey_name(), sessionAid.getValue_name());

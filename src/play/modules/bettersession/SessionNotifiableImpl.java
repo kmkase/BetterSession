@@ -9,7 +9,7 @@ import play.Logger;
 import play.cache.Cache;
 import play.modules.bettersession.daos.jdbc.JdbcSessionAidDAOImpl;
 import play.modules.bettersession.daos.SessionAidDAO;
-import play.modules.bettersession.handlers.NotifySessionAidHandler;
+import play.modules.bettersession.handlers.SessionNotifiable;
 import play.modules.bettersession.model.SessionAid;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * This class have the basic functions of create, delete, update and read Model session
  */
-public class NotifySessionAidImpl implements NotifySessionAidHandler {
+public class SessionNotifiableImpl implements SessionNotifiable {
 
     private final static SessionAidDAO sessionAidDAO = new JdbcSessionAidDAOImpl();
 

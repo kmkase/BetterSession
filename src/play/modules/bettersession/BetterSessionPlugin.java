@@ -29,6 +29,7 @@ public class BetterSessionPlugin extends PlayPlugin {
         }
 
         String sessionCookiePrefix = Play.configuration.getProperty(BetterSessionUtility.PLAY_SESSION_COOKIE_PREFIX);
+//        String appName = Play.configuration.getProperty(BetterSessionUtility.PLAY_APPLICATION_NAME);
         Play.configuration.setProperty(BetterSessionUtility.IMPROVED_SESSION_CONFIG_KEY_PREFIX, sessionCookiePrefix != null ? sessionCookiePrefix : "PLAY" );
 
         BetterSessionUtility.REMEMBER = String.format("%s_%s", BetterSessionUtility.getPrefix(), "remember");
@@ -40,7 +41,7 @@ public class BetterSessionPlugin extends PlayPlugin {
 
         // Make instances of the implementations...
         BetterSession.init();
-        SessionAidEvents.init();
+        SessionNotifies.init();
 
     }
 
@@ -52,7 +53,7 @@ public class BetterSessionPlugin extends PlayPlugin {
 
         // Add to routes the URL to clear session. NOTE: Only works in dev mode
         if (Play.mode.isDev()) {
-            Router.addRoute("GET", "/@clear-session/?", "bettersession.BetterSessionController.clearSession");
+            Router.addRoute("GET", "/@clean-session/?", "bettersession.BetterSessionController.cleanSession");
         }
     }
 
@@ -60,7 +61,7 @@ public class BetterSessionPlugin extends PlayPlugin {
     public void onInvocationSuccess() {
         // -----
         // To leave stable the Cache and Model sessions
-        SessionAidEvents.notifyElementExpired();
+        SessionNotifies.notifyElementExpired();
 
         // Verify if is needed do a renew of session
         BetterSession.renewSession();

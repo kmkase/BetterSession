@@ -7,6 +7,7 @@ package controllers;
 
 import models.User;
 import play.Logger;
+import play.modules.bettersession.BetterSession;
 
 public class Security extends SecureController.Security {
 
@@ -26,14 +27,21 @@ public class Security extends SecureController.Security {
         SessionController.welcome();
     }
 
-//    static void onDisconect() {
-//        // -----
-//        // Drop session cookie, uniqueSession from cache and remember cookie
-//    }
-
     static void onDisconnected() {
 
         ApplicationController.index();
+    }
+
+    static boolean isConnected() {
+        return BetterSession.isConnected();
+    }
+
+    static String connected() {
+        return BetterSession.getSessionValue();
+    }
+
+    static long connectedAt() {
+        return BetterSession.connectedAt();
     }
 
 }

@@ -5,53 +5,57 @@
  */
 package play.modules.bettersession;
 
-import play.modules.bettersession.handlers.BetterSessionEventHandler;
+import play.modules.bettersession.handlers.BetterSessionHandler;
 
 public abstract class BetterSession {
 
-    // TODO: Add method to add owns implementations of BetterSessionEventHandler
+    // TODO: Add method to add owns implementations of BetterSessionHandler
 
-    private static BetterSessionEventHandler sessionEventHandler;
+    private static BetterSessionHandler betterSessionHandler;
 
     public static void createSession(String value, Boolean remember) {
-        sessionEventHandler.create(value, remember);
+        betterSessionHandler.create(value, remember);
     }
 
     public static void dropSession() {
-        sessionEventHandler.remove();
+        betterSessionHandler.remove();
     }
 
     public static boolean existSession(String value) {
-        return sessionEventHandler.exist(value);
+        return betterSessionHandler.exist(value);
     }
 
     public static void renewSession() {
-        sessionEventHandler.renew();
+        betterSessionHandler.renew();
     }
 
     public static boolean isRememberCookieCreated() {
-        return sessionEventHandler.isRememberSessionCookieCreated();
+        return betterSessionHandler.isRememberCookieCreated();
+    }
+
+    public static void renewSessionFromRememberCookie() {
+        betterSessionHandler.renewSessionFromRememberCookie();
     }
 
     public static boolean isConnected() {
-        return sessionEventHandler.isConnected();
+        return betterSessionHandler.isConnected();
     }
 
-    public static String connected() {
-        return sessionEventHandler.getSessionValue();
+    public static String getSessionValue() {
+        return betterSessionHandler.getSessionValue();
     }
 
     public static long connectedAt() {
-        return sessionEventHandler.getDateFromSession();
+        return betterSessionHandler.getDateFromSession();
     }
 
     public static void init() {
 //        if (customEventHandler != null) {
-//            sessionEventHandler = customEventHandler;
+//            betterSessionHandler = customEventHandler;
 //            return;
 //        }
-//        sessionEventHandler = BetterSessionEventImpl.getInstance();
-        sessionEventHandler = new BetterSessionEventImpl();
+//        betterSessionHandler = BetterSessionHandlerImpl.getInstance();
+        betterSessionHandler = new BetterSessionHandlerImpl();
     }
 
 }
